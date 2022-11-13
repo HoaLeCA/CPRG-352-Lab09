@@ -20,5 +20,11 @@ public class RoleService {
         List <Role> roles = roleDB.getAll();
         return roles;
     }
+ 
+ public List <Role> getRoleName(int roleId) throws Exception {
+     RoleDB roleDB = new RoleDB();
+     List <Role> roles = (List <Role>) roleDB.getRole(roleId);
+     return roles;
+ }
     
 }

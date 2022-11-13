@@ -17,7 +17,7 @@
         <title>User Information</title>
     </head>
     <body>
-          <div class="container">
+     <div class="container">
         <div class="row">
             <div class="column1">
                 <h3>Add User</h3>
@@ -29,7 +29,7 @@
                         <input type="text" name="password" id="password" value="" placeholder="Password">
                         <select name="role">
                         <c:forEach var="role" items="${roles}">                           
-                            <option value="${role.id}">${role.role}  </option>
+                            <option value="${role.roleId}">${role.roleName}  </option>
                         </c:forEach>
                         </select><br>
                         <input type="checkbox" name="active" id="active" value="">
@@ -56,10 +56,10 @@
                         <c:forEach var="user" items="${users}">
                             <tr>
                                 <td>${user.email}</td>
-                                <td>${user.fname}</td>
-                                <td>${user.lname}</td>
+                                <td>${user.firstName}</td>
+                                <td>${user.lastName}</td>
                                 <td>${user.password}</td>
-                                <td>${user.role}</td>
+                                <td>${user.role.roleName}</td>
                                 <td>
                                     <input type="checkbox" name="active" id="active" <c:if test="${user.active}"> checked </c:if>>
                                 </td>
@@ -80,22 +80,22 @@
                 <form action="users" method="POST">
 
                     <input type="text" name="email" id="email" value="${selectedUser.email}" placeholder="Email" readonly >
-                    <input type="text" name="fname" id="fname" value="${selectedUser.fname}" placeholder="First Name" >
-                    <input type="text" name="lname" id="lname" value="${selectedUser.lname}" placeholder="Last Name">
+                    <input type="text" name="fname" id="fname" value="${selectedUser.firstName}" placeholder="First Name" >
+                    <input type="text" name="lname" id="lname" value="${selectedUser.lastName}" placeholder="Last Name">
                     <input type="text" name="password" id="password" value="${selectedUser.password}" placeholder="Password">
                     
                      <select name="role">
                          
                        
                         <c:forEach var="role" items="${roles}">
-                            <c:if test="${selectedUser.role eq role.role}">
-                                <option value="${role.id}">${role.role}</option>
+                            <c:if test="${selectedUser.role.roleName eq role.roleName}">
+                                <option value="${role.roleId}">${selectedUser.role.roleName}</option>
                             </c:if>                          
 
                         </c:forEach>
                                 <c:forEach var="role" items="${roles}">
-                                    <c:if test="${role.role ne selectedUser.role}">
-                                        <option value="${role.id}">${role.role}  </option>
+                                    <c:if test="${role.roleName ne selectedUser.role.roleName}">
+                                        <option value="${role.roleId}">${role.roleName}  </option>
                                         
                                     </c:if>
                                 </c:forEach>       
@@ -111,11 +111,8 @@
                 <form action="users" method="POST">
                     <input type="submit" value="Cancel">
                     <input type="hidden" name="action" value="cancel">
-                </form>    
-                
-                    
-               
-    
+                </form>                
+
         </div>
     </div>
     </body>

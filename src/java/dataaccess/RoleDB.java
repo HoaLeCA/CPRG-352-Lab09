@@ -7,37 +7,36 @@ package dataaccess;
 
 import java.sql.*;
 import java.util.*;
+import javax.persistence.EntityManager;
 import models.Role;
+import models.User;
 
 /**
  *
  * @author levan
  */
 public class RoleDB {
-    public List<Role> getAll () throws Exception {
-        List <Role> roles = new ArrayList<>();
-        ConnectionPool cp = ConnectionPool.getInstance();
-        Connection con = cp.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        String sql = "SELECT * FROM role";
+    
+   public List <Role> getAll() throws Exception {
+       EntityManager em = DBUtil.getEmFactory().createEntityManager();
+       
+       try{
+           List <Role> fullRoles = em.createNamedQuery("Role.findAll", Role.class).getResultList();
+           return fullRoles;
+       }finally{
+           em.close();
+       }
+       
+   }
+    public Role getRole(int id) throws Exception {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
         try{
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                int id = rs.getInt(1);
-                String ro = rs.getString(2);
-                Role role = new Role(id, ro);
-                roles.add(role);
-            }
-        }finally{
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            cp.freeConnection(con);
+            Role role = em.find(Role.class, id);
+            return role;
+        } finally {
+            em.close();
         }
-        return roles;
-    }   
-    
+    }
+ 
 }

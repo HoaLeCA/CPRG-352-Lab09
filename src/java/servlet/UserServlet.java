@@ -88,17 +88,18 @@ public class UserServlet extends HttpServlet {
         String lname = request.getParameter("lname");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
+
         
         
         
         try{
             switch(action){
                 case "add":
-                    us.insert(email, active, fname, lname, password, role);
+                    us.insert(email, active, fname, lname, password, Integer.parseInt(role));
                     request.setAttribute("message", UPDATE_SUCC + action);
                     break;
                 case "update":
-                    us.update(email, active, fname, lname, password, role);
+                    us.update(email, active, fname, lname, password, Integer.parseInt(role));
                     request.setAttribute("message", UPDATE_SUCC + action);
                     break; 
                 case "cancel":{
